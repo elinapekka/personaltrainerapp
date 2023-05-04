@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { API_URL } from '../constant';
 import dayjs from 'dayjs';
@@ -28,7 +29,9 @@ function Traininglist() {
         {field: 'date', headerName: 'Date & Time', sortable: true, filter:true, width:250},
         {field: 'duration', headerName: 'Duration (min)', sortable: true, filter:true, width:200},
         {field: 'activity', headerName: 'Activity', sortable: true, filter:true, width: 200},
-        {field: 'customer', headerName: 'Customer', sortable: true, filter:true, width: 200},
+        {field: 'customer', headerName: 'Customer', sortable: true, filter:true, width: 200,
+            valueFormatter: (params) => params.value.firstname + ' ' + params.value.lastname      
+        },
         { field: 'delete', headerName: 'Delete', width: 75, sortable: false, filter: false,
             renderCell: (params) => {
                 return (
@@ -43,106 +46,56 @@ function Traininglist() {
         }}
     ]);
 
-    useEffect( () => {
-        fetch(API_URL + 'api/trainings')
+    useEffect(() => {
+        fetch(API_URL + 'gettrainings')
         .then(response => {
             if (response.ok){
                 return response.json()
             } else{
-                alert('Something went wrong in GET request')
+                alert('Something went wrong in GET request when fetching customers')
             }       
         })
-        .then(dataResponse => {
-            
-            let content = dataResponse.content
-          
-            for(let i = 0; i < content.length; i += 1) {
-
-                content[i].date = dayjs(content[i].date).format('DD.MM.YYYY - hh:mm')
-
-                fetch(content[i].links[2].href)
-                .then(response => {
-                    if (response.ok){
-                        return response.json()
-                    } else{
-                        console.log('not success')
-                    }       
-                })
-                .then(dataResponse => {
-                    let cust = ''
-                    if (dataResponse.firstname !== undefined){
-                        cust = dataResponse.firstname + ' ' + dataResponse.lastname
-                    } 
-                    setTrainings(trainings => [...trainings, {
-                        date: content[i].date,
-                        duration: content[i].duration,
-                        activity: content[i].activity,
-                        customer: cust,
-                        links: content[i].links
-                    }])
-                })
-
-            }
+        .then(data => {
+            data.forEach(d => {
+                d.date = dayjs(d.date).format('DD.MM.YYYY - hh:mm')
+            })
+            setTrainings(data)
         })
         .catch(err => console.log(err))
     }, []);
 
 
     const getTrainings = () => {
-        fetch(API_URL + 'api/trainings')
+        fetch(API_URL + 'gettrainings')
         .then(response => {
             if (response.ok){
                 return response.json()
             } else{
-                alert('Something went wrong in GET request')
+                alert('Something went wrong in GET request when fetching customers')
             }       
         })
-        .then(dataResponse => {
-            setTrainings([])
-        
-            let content = dataResponse.content
-
-            for(let i = 0; i < content.length; i += 1) {
-                content[i].date = dayjs(content[i].date).format('DD.MM.YYYY - hh:mm')
-
-                fetch(content[i].links[2].href)
-                .then(response => {
-                    if (response.ok){
-                        return response.json()
-                    } else{
-                        console.log('problem with fetching the customer')
-                    }       
-                })
-                .then(dataResponse => {
-                    let cust = ''
-                    if (dataResponse.firstname !== undefined){
-                        cust = dataResponse.firstname + ' ' + dataResponse.lastname
-                    } 
-
-                    setTrainings(trainings => [...trainings, {
-                        date: content[i].date,
-                        duration: content[i].duration,
-                        activity: content[i].activity,
-                        customer: cust,
-                        links: content[i].links
-                    }])
-                })
-
-            }
+        .then(data => {
+            data.forEach(d => {
+                d.date = dayjs(d.date).format('DD.MM.YYYY - hh:mm')
+            })
+            setTrainings(data)
         })
         .catch(err => console.log(err))
     }
 
+
     // delete selected training 
     const deleteTraining = (params) => {
+        console.log(params)
         if (window.confirm("Do you want to delete training?")){
-            fetch(params.id, { method: 'DELETE' })
+            fetch(API_URL + 'api/trainings/' + params.id, { method: 'DELETE' })
             .then(response => {
                 if (response.ok){
                     setMsg('Deleted successfully')
                     setOpen(true);
                     getTrainings();
                 } else {
+                    console.log(API_URL + 'api/trainings/' + params.id)
                     alert('Something went wrong in deletion');
                 }
             })
@@ -156,7 +109,7 @@ function Traininglist() {
 
             <div style={{ height: 475, width: '100%' }}>
                 <DataGrid
-                    getRowId={(row) => row.links[0].href}
+                    getRowId={(row) => row.id}
                     rows={trainings}
                     columns={columnDefs}
                     slots={{
