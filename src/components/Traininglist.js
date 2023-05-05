@@ -46,6 +46,7 @@ function Traininglist() {
         }}
     ]);
 
+
     useEffect(() => {
         fetch(API_URL + 'gettrainings')
         .then(response => {

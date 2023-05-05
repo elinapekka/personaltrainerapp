@@ -1,7 +1,7 @@
 import './App.css';
 import Customerlist from './components/Customerlist';
 import Traininglist from './components/Traininglist';
-
+import GetCalendar from './components/GetCalendar';
 
 import React, { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
@@ -31,9 +31,11 @@ function App() {
       <Tabs value={value} onChange={handleChange}>
         <Tab value="customers" label="Customers" />
         <Tab value="trainings" label="Trainings" />
+        <Tab value="calendar" label="Calendar" />
       </Tabs>
       {value === 'customers' && <Customerlist />}
       {value === 'trainings' && <Traininglist />}
+      {value === 'calendar' && <GetCalendar />}
 
     </div>
   );
