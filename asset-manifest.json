@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/personaltrainerdeployed/static/css/main.cd827901.css",
-    "main.js": "/personaltrainerdeployed/static/js/main.0d756e79.js",
-    "static/js/787.40541ff1.chunk.js": "/personaltrainerdeployed/static/js/787.40541ff1.chunk.js",
-    "index.html": "/personaltrainerdeployed/index.html",
-    "main.cd827901.css.map": "/personaltrainerdeployed/static/css/main.cd827901.css.map",
-    "main.0d756e79.js.map": "/personaltrainerdeployed/static/js/main.0d756e79.js.map",
-    "787.40541ff1.chunk.js.map": "/personaltrainerdeployed/static/js/787.40541ff1.chunk.js.map"
+    "main.css": "/personaltrainerapp/static/css/main.cd827901.css",
+    "main.js": "/personaltrainerapp/static/js/main.5e7e9328.js",
+    "static/js/787.40541ff1.chunk.js": "/personaltrainerapp/static/js/787.40541ff1.chunk.js",
+    "index.html": "/personaltrainerapp/index.html",
+    "main.cd827901.css.map": "/personaltrainerapp/static/css/main.cd827901.css.map",
+    "main.5e7e9328.js.map": "/personaltrainerapp/static/js/main.5e7e9328.js.map",
+    "787.40541ff1.chunk.js.map": "/personaltrainerapp/static/js/787.40541ff1.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.cd827901.css",
-    "static/js/main.0d756e79.js"
+    "static/js/main.5e7e9328.js"
   ]
 }
